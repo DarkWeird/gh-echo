@@ -34,10 +34,21 @@ dependencies {
 
 }
 
+graalvmNative {
+    binaries {
+        main {
+            imageName = $project.name
+            if (System.getenv("RUNNER_OS") != null) {
+                imageName += System.getenv("RUNNER_OS")
+            }
+        }
+    }
+}
 
 application {
     mainClass.set("me.darkweird.GhExtensionCommand")
 }
+
 java {
     sourceCompatibility = JavaVersion.toVersion("11")
     targetCompatibility = JavaVersion.toVersion("11")
