@@ -1,0 +1,6 @@
+applicationType: cli
+defaultPackage: me.darkweird
+testFramework: junit
+sourceLanguage: java
+buildTool: gradle
+features: [annotation-api, app-name, graalvm, gradle, java, junit, picocli, picocli-java-application, picocli-junit, readme, shade, slf4j-simple, yaml]
