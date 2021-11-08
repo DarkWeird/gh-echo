@@ -37,7 +37,7 @@ dependencies {
 graalvmNative {
     binaries {
         main {
-            imageName = $project.name
+            imageName = project.name
             if (System.getenv("RUNNER_OS") != null) {
                 imageName += System.getenv("RUNNER_OS")
             }
