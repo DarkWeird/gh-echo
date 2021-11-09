@@ -34,15 +34,8 @@ dependencies {
 
 }
 
-graalvmNative {
-    binaries {
-        main {
-            imageName = project.name
-            if (System.getenv("RUNNER_OS") != null) {
-                imageName += System.getenv("RUNNER_OS")
-            }
-        }
-    }
+if (System.getenv("RUNNER_OS") != null) {
+    graalvmNative.binaries.main.imageName = "${graalvmNative.binaries.main.imageName.get()}-${System.getenv("RUNNER_OS")}"
 }
 
 application {
