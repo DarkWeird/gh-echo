@@ -25,21 +25,21 @@ elif uname -a | grep Linux > /dev/null; then
 	fi
 fi
 
-executablePath = "";
+executablePath=""
 
 if [ "${exe}" == "" ]; then
   if uname -a | grep Msys >/dev/null; then
     imagename = "${imagename}.exe"
   fi
-  if [[ -x "${extensionPath}/build/libs/gh-echo-0.1-all.jar"]]; then
+  if [[ -f "${extensionPath}/build/libs/gh-echo-0.1-all.jar" ]]; then
     # JVM variant
     executablePath = "${extensionPath}/build/libs/gh-echo-0.1-all.jar"
-  elif [[ -x "${extensionPath}/build/native/nativeCompile/${imagename}"]]; then
+  elif [[ -f "${extensionPath}/build/native/nativeCompile/${imagename}" ]]; then
     # Native Image variant
     executablePath = "${extensionPath}/build/native/nativeCompile/${imagename}"
   else
     if [ ! "$(which javac)" = "" ]; then
-        if [ ! "$(which native-image)" = ""]; then
+        if [ ! "$(which native-image)" = "" ]; then
           ./gradlew nativeCompile
           executablePath = "${extensionPath}/build/native/nativeCompile/${imagename}"
         else
@@ -52,7 +52,7 @@ if [ "${exe}" == "" ]; then
       fi
   fi
 else
-  executablePath = "${extensionPath}/${exe}"
+  executablePath="${extensionPath}/${exe}"
   # Check release executable
   if [[ ! -x "${executablePath}" ]]; then
     #Fetch release
