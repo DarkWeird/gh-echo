@@ -15,7 +15,7 @@ entry point for gh - bash script `gh-echo` which determinate and handles executa
       * if you haven't `native-image` - build `shadowjar` - jar with all dependencies and use it
       * if you haven't `javac` - exits with error
 
-> graalvm haven't crosscompile feature. then prebuild binaries provides only for GitHub Action's runners. 
+> graalvm haven't crosscompile feature. then prebuild binaries provides only for GitHub Action's runner platforms. 
 
 ## Getting Started
 
