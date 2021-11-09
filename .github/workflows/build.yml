@@ -61,9 +61,9 @@ jobs:
 
       - name: make changes and push
       - run: |
-        echo '${{ github.ref_name }}' > tag
-        git commit -a -m '[Automatic] bumpup version to ${{ github.ref_name }}'
-        git push origin master
+         echo '${{ github.ref_name }}' > tag
+         git commit -a -m '[Automatic] bumpup version to ${{ github.ref_name }}'
+         git push origin master
         
       
         
