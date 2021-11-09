@@ -5,8 +5,7 @@ name: Gradle Package
 
 on:
   push:
-    branches: 'master'
-#     tags: '*'
+     tags: 'v*.*.*'
 
 jobs:
   build:
@@ -42,8 +41,23 @@ jobs:
     - uses: "marvinpinto/action-automatic-releases@latest"
       with:
         repo_token: "${{ secrets.GITHUB_TOKEN }}"
-        automatic_release_tag: "latest"
+        automatic_release_tag: ${{ github.ref_name  }}
         prerelease: false
         title: ${{ github.ref_name  }}
         files: 'gh-echo*'
+  bumpupextension:
+    runs-on: ubuntu-latest
+    needs: publish
+    steps:
+      - uses: actions/checkout@v2
+        with: 
+          repository: DarkWeird/gh-echojava
+          ref: master
+          token: ${{github.token}}
+      - run: echo '${{ github.ref_name }}' > tag
+      - run: git commit -a -m '[Automatic] bumpup  version to ${{ github.ref_name }}'
+      - run: git push
+        
+      
+        
     
