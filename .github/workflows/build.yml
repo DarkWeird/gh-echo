@@ -45,15 +45,3 @@ jobs:
         prerelease: false
         title: ${{ github.ref_name  }}
         files: 'gh-echo*'
-  bumpupextension:
-    runs-on: ubuntu-latest
-    needs: publish
-    steps:
-      - uses: actions/checkout@v2
-        with: 
-          repository: DarkWeird/gh-echojava
-          ref: master
-          token: ${{github.token}}
-      - name: set release version
-        run: |
-         echo '${{ github.ref_name }}' > tag
