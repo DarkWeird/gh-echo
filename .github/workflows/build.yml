@@ -25,9 +25,7 @@ jobs:
         # The Java version
         java-version: 11
     - name: Build with Gradle
-      uses: gradle/gradle-build-action@v2.0-rc.3
-      with:
-        arguments: nativeCompile
+      run: ./gradlew nativeCompile
 
     - uses: "marvinpinto/action-automatic-releases@latest"
       with:
