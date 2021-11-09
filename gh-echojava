@@ -1,0 +1,65 @@
+#!/bin/bash
+set -e
+
+extensionPath="$(dirname "$0")"
+
+tag=v0.1.8
+imagename="gh-echo"
+repo="DarkWeird/gh-echo-example"
+arch="$(uname -m)"
+
+exe=""
+
+# resolve exe name for fetch release from GitHub releases.
+if uname -a | grep Msys > /dev/null; then
+  if [ $arch = "x86_64" ]; then
+	  exe="${imagename}-Windows.exe"
+	fi
+elif uname -a | grep Darwin > /dev/null; then
+  if [ $arch = "x86_64" ]; then
+	  exe="${imagename}-macOS"
+	fi
+elif uname -a | grep Linux > /dev/null; then
+  if [ $arch = "x86_64" ]; then
+	  exe="${imagename}-Linux"
+	fi
+fi
+
+executablePath = "";
+
+if [ "${exe}" == "" ]; then
+  if uname -a | grep Msys >/dev/null; then
+    imagename = "${imagename}.exe"
+  fi
+  if [[ -x "${extensionPath}/build/libs/gh-echo-0.1-all.jar"]]; then
+    # JVM variant
+    executablePath = "${extensionPath}/build/libs/gh-echo-0.1-all.jar"
+  elif [[ -x "${extensionPath}/build/native/nativeCompile/${imagename}"]]; then
+    # Native Image variant
+    executablePath = "${extensionPath}/build/native/nativeCompile/${imagename}"
+  else
+    if [ ! "$(which javac)" = "" ]; then
+        if [ ! "$(which native-image)" = ""]; then
+          ./gradlew nativeCompile
+          executablePath = "${extensionPath}/build/native/nativeCompile/${imagename}"
+        else
+          ./gradlew shadowJar
+          executablePath = "${extensionPath}/build/libs/gh-echo-0.1-all.jar"
+        fi
+      else
+        echo "You haven't java for building this project"
+        exit 1;
+      fi
+  fi
+else
+  executablePath = "${extensionPath}/${exe}"
+  # Check release executable
+  if [[ ! -x "${executablePath}" ]]; then
+    #Fetch release
+  	gh release -R"${repo}" download "${tag}" -p "${exe}" --dir "${extensionPath}"
+  	e
+  	chmod +x "${executablePath}"
+  fi
+fi
+
+exec "${extensionPath}/${exe}" "$@"
