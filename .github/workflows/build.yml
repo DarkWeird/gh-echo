@@ -27,12 +27,23 @@ jobs:
         java-version: 11
     - name: Build with Gradle
       run: ./gradlew nativeCompile
-
+    - uses: actions/upload-artifact@master
+      with:
+        name: executable
+        path: build/native/nativeCompile/gh-echo*
+        
+  publish:
+   runs-on: ubuntu-latest
+   needs: build
+   steps:
+    - uses: actions/download-artifact@master
+      with:
+        name: executable
     - uses: "marvinpinto/action-automatic-releases@latest"
       with:
         repo_token: "${{ secrets.GITHUB_TOKEN }}"
         automatic_release_tag: "latest"
-        prerelease: true
-        title: "Development Build"
-        files: |
-          build/native/nativeCompile/gh-echo*
+        prerelease: false
+        title: {{ github.ref_name }}
+        files: 'gh-echo*'
+    
