@@ -54,24 +54,13 @@ jobs:
           repository: DarkWeird/gh-echojava
           ref: master
           token: ${{github.token}}
-      - name: setup git config
-        run: |
-          git config user.name "GitHub Actions Bot"
-          git config user.email "<>"
-
       - name: set release version
         run: |
          echo '${{ github.ref_name }}' > tag
-      - name: Push files and tag
-        uses: Amraneze/push-to-protected-branch@v1
-        with:
-          repository: 'gh-echojava'
-          branch_name: 'master'
-          github_user: 'DarkWeird'
-          github_token: ${{ github.token }}
-          commit_message: '[Automatic] bumpup version to ${{ github.ref_name }}'
-          files_to_commit: 'tag'
-        
-      
-        
-    
+      - name: Push files
+        run: |
+            git config user.name github-actions
+            git config user.email github-actions@github.com
+            git add tag
+            git commit -m "[Automatic] bumpup version to ${{ github.ref_name }}"
+            git push
