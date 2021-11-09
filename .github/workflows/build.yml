@@ -55,7 +55,7 @@ jobs:
           ref: master
           token: ${{github.token}}
       - run: echo '${{ github.ref_name }}' > tag
-      - run: git commit -a -m '[Automatic] bumpup  version to ${{ github.ref_name }}'
+      - run: git commit -a -m '[Automatic] bumpup version to ${{ github.ref_name }}' --author="Actions"
       - run: git push
         
       
