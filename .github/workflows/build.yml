@@ -5,7 +5,8 @@ name: Gradle Package
 
 on:
   push:
-    tags: '*'
+    branches: 'master'
+#     tags: '*'
 
 jobs:
   build:
