@@ -57,10 +57,3 @@ jobs:
       - name: set release version
         run: |
          echo '${{ github.ref_name }}' > tag
-      - name: Push files
-        run: |
-            git config user.name github-actions
-            git config user.email github-actions@github.com
-            git add tag
-            git commit -m "[Automatic] bumpup version to ${{ github.ref_name }}"
-            git push
