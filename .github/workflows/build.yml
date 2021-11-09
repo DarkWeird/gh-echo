@@ -54,9 +54,16 @@ jobs:
           repository: DarkWeird/gh-echojava
           ref: master
           token: ${{github.token}}
-      - run: echo '${{ github.ref_name }}' > tag
-      - run: git commit -a -m '[Automatic] bumpup version to ${{ github.ref_name }}' --author="Actions"
-      - run: git push
+      - name: setup git config
+        run: |
+          git config user.name "GitHub Actions Bot"
+          git config user.email "<>"
+
+      - name: make changes and push
+      - run: |
+        echo '${{ github.ref_name }}' > tag
+        git commit -a -m '[Automatic] bumpup version to ${{ github.ref_name }}'
+        git push origin master
         
       
         
