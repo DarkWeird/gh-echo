@@ -1,4 +1,4 @@
-# gh-echo-example
+# gh-echo
 
 This is a proof-of-concept [extension](https://github.blog/2021-08-24-github-cli-2-0-includes-extensions/) for `gh`, the GitHub CLI tool.
 The concept of those extensions is quite simple, `gh` basically acts as plug-in manager and allows to call an exectuable as extension. 
